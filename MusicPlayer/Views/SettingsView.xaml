@@ -1,0 +1,172 @@
+<UserControl x:Class="MusicPlayer.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MusicPlayer">
+    <UserControl.Resources>
+        <Style x:Key="ThemeComboBoxItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Padding" Value="16,0" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder"
+                                Margin="4,2"
+                                Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Left"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource PanelHoverBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource ButtonHoverBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ThemeComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="40" />
+            <Setter Property="MinWidth" Value="220" />
+            <Setter Property="Padding" Value="14,0,38,0" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="Background" Value="{DynamicResource ButtonBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ThemeComboBoxItemStyle}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton"
+                                          Background="{TemplateBinding Background}"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          ClickMode="Press"
+                                          Focusable="False"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="ToggleBorder"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="7">
+                                            <Grid>
+                                                <ContentPresenter Margin="16,0,42,0"
+                                                                  HorizontalAlignment="Left"
+                                                                  VerticalAlignment="Center"
+                                                                  Content="{Binding SelectionBoxItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                                  ContentStringFormat="{Binding SelectionBoxItemStringFormat, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                                  ContentTemplate="{Binding SelectionBoxItemTemplate, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                                  RecognizesAccessKey="True"
+                                                                  TextElement.Foreground="{DynamicResource TextPrimaryBrush}" />
+                                                <TextBlock Margin="0,0,16,1"
+                                                           HorizontalAlignment="Right"
+                                                           VerticalAlignment="Center"
+                                                           FontSize="13"
+                                                           Foreground="{DynamicResource TextPrimaryBrush}"
+                                                           Opacity="0.72"
+                                                           Text="&#x25BE;" />
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="ToggleBorder" Property="Background" Value="{DynamicResource ButtonHoverBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="ToggleBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <Popup x:Name="PART_Popup"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   Placement="Bottom"
+                                   PopupAnimation="Fade">
+                                <Border MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Margin="0,6,0,0"
+                                        Padding="4"
+                                        Background="{DynamicResource PanelBrush}"
+                                        BorderBrush="{DynamicResource PanelBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="8"
+                                        SnapsToDevicePixels="True">
+                                    <ScrollViewer MaxHeight="180"
+                                                  CanContentScroll="True"
+                                                  Focusable="False">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <TextBlock Text="&#x8BBE;&#x7F6E;"
+                   FontSize="28"
+                   FontWeight="SemiBold" />
+        <TextBlock Text="&#x5E94;&#x7528;&#x504F;&#x597D;&#x8BBE;&#x7F6E;&#x5C06;&#x653E;&#x5728;&#x8FD9;&#x91CC;"
+                   Margin="0,8,0,28"
+                   Foreground="{DynamicResource MutedBrush}" />
+        <Border Padding="28"
+                local:AppTheme.Role="Panel"
+                Background="{DynamicResource PanelBrush}"
+                BorderBrush="{DynamicResource PanelBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <StackPanel>
+                <TextBlock Text="&#x4E3B;&#x9898;"
+                           FontSize="18"
+                           FontWeight="SemiBold" />
+                <TextBlock Text="&#x9009;&#x62E9;&#x5E94;&#x7528;&#x7684;&#x5916;&#x89C2;&#x9884;&#x8BBE;"
+                           Margin="0,8,0,16"
+                           Foreground="{DynamicResource MutedBrush}" />
+
+                <ComboBox x:Name="ThemePresetComboBox"
+                          Width="220"
+                          HorizontalAlignment="Left"
+                          Style="{StaticResource ThemeComboBoxStyle}"
+                          SelectionChanged="ThemePresetComboBox_SelectionChanged">
+                    <ComboBoxItem Content="&#x8DDF;&#x968F;&#x7CFB;&#x7EDF;"
+                                  Tag="System" />
+                    <ComboBoxItem Content="&#x6DF1;&#x8272;"
+                                  Tag="Dark" />
+                    <ComboBoxItem Content="&#x6D45;&#x8272;"
+                                  Tag="Light" />
+                </ComboBox>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>
+

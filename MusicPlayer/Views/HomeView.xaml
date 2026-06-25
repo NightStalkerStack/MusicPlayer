@@ -1,0 +1,87 @@
+<UserControl x:Class="MusicPlayer.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MusicPlayer">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="&#x4E3B;&#x9875;"
+                       FontSize="28"
+                       FontWeight="SemiBold" />
+            <TextBlock Text="&#x4ECE;&#x5DE6;&#x4FA7;&#x9009;&#x62E9;&#x6B4C;&#x5355;&#xFF0C;&#x6216;&#x7EE7;&#x7EED;&#x64AD;&#x653E;&#x5F53;&#x524D;&#x97F3;&#x4E50;"
+                       Margin="0,8,0,28"
+                       Foreground="{DynamicResource MutedBrush}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1"
+              Height="180"
+              VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Padding="24"
+                    local:AppTheme.Role="Panel"
+                    Background="{DynamicResource PanelBrush}"
+                    BorderBrush="{DynamicResource PanelBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                <StackPanel>
+                    <TextBlock Text="&#x6700;&#x559C;&#x6B22;&#x542C;&#x7684;&#x6B4C;&#x5355;"
+                               Foreground="{DynamicResource MutedBrush}"
+                               FontSize="13" />
+                    <TextBlock x:Name="FavoritePlaylistNameTextBlock"
+                               Text="&#x6682;&#x65E0;&#x64AD;&#x653E;&#x8BB0;&#x5F55;"
+                               Margin="0,18,0,0"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               TextTrimming="CharacterEllipsis" />
+                    <TextBlock x:Name="FavoritePlaylistCountTextBlock"
+                               Text=""
+                               Margin="0,10,0,0"
+                               Foreground="{DynamicResource MutedBrush}"
+                               FontSize="14" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Margin="18,0,0,0"
+                    Padding="24"
+                    local:AppTheme.Role="Panel"
+                    Background="{DynamicResource PanelBrush}"
+                    BorderBrush="{DynamicResource PanelBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                <StackPanel>
+                    <TextBlock Text="&#x6700;&#x559C;&#x6B22;&#x542C;&#x7684;&#x6B4C;&#x66F2;"
+                               Foreground="{DynamicResource MutedBrush}"
+                               FontSize="13" />
+                    <TextBlock x:Name="FavoriteTrackTitleTextBlock"
+                               Text="&#x6682;&#x65E0;&#x64AD;&#x653E;&#x8BB0;&#x5F55;"
+                               Margin="0,18,0,0"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               TextTrimming="CharacterEllipsis" />
+                    <TextBlock x:Name="FavoriteTrackMetaTextBlock"
+                               Text=""
+                               Margin="0,10,0,0"
+                               Foreground="{DynamicResource MutedBrush}"
+                               FontSize="14"
+                               TextTrimming="CharacterEllipsis" />
+                    <TextBlock x:Name="FavoriteTrackCountTextBlock"
+                               Text=""
+                               Margin="0,8,0,0"
+                               Foreground="{DynamicResource MutedBrush}"
+                               FontSize="14" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
+
