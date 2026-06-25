@@ -47,6 +47,42 @@ dotnet run --project .\MusicPlayer\MusicPlayer.csproj
 dotnet publish .\MusicPlayer\MusicPlayer.csproj -c Release
 ```
 
+## 发布后创建搜索入口
+
+仓库根目录提供了 [install-start-menu-shortcut.bat](E:/WPF_Projects/MusicPlayer/install-start-menu-shortcut.bat)，用于给已发布的 `MusicPlayer.exe` 创建当前用户的开始菜单快捷方式。
+
+发布时可以采用以下任一目录结构：
+
+```text
+MusicPlayer_win-x64
+├── MusicPlayer.exe
+├── MusicPlayer.dll
+├── MusicPlayer.deps.json
+└── ...
+```
+
+将 `install-start-menu-shortcut.bat` 放进 `MusicPlayer_win-x64` 目录后运行。
+
+也可以把脚本放在发布目录旁边：
+
+```text
+.
+├── install-start-menu-shortcut.bat
+└── MusicPlayer_win-x64
+    ├── MusicPlayer.exe
+    ├── MusicPlayer.dll
+    ├── MusicPlayer.deps.json
+    └── ...
+```
+
+双击运行脚本后，会创建：
+
+```text
+%APPDATA%\Microsoft\Windows\Start Menu\Programs\MusicPlayer.lnk
+```
+
+创建成功后，Windows 搜索、PowerToys Run、Flow Launcher、Listary 等启动器通常都可以通过 `MusicPlayer` 搜索到应用。
+
 ## 数据与日志
 
 应用状态会保存到当前用户的 AppData 目录：
